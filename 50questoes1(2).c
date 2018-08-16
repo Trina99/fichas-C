@@ -5,7 +5,7 @@
 
 void menu()
 {
-    printf("1. maior numero\n2.media da sequencia\n3.segundo maior\n4.bits a um\n5.ultimos bits a 0\n6.digitos necesarios\n7.concatena 2 strings\n8.copia string\n9.string compare\n10.string contida noutra\n11.string invertida\n12.string sem vogais\n13.string truncada\n");
+    printf("1. maior numero\n2.media da sequencia\n3.segundo maior\n4.bits a um\n5.ultimos bits a 0\n6.digitos necesarios\n7.concatena 2 strings\n8.copia string\n9.string compare\n10.string contida noutra\n11.string invertida\n12.string sem vogais\n13.string truncada\n14.char mais frequente");
 }
 //1.
 int maior()
@@ -211,6 +211,28 @@ void truncW(char t[], int n)
     t[j] = '\0';
 }
 
+//14.
+char charMaisfreq(char s[])
+{
+    int i, j, x = 0, n = 0;
+    char ch = 0;
+    for (i = 0; s[i]; i++)
+    {
+        for (j = i; s[j]; j++)
+        {
+            if (s[j] == s[i])
+                n++;
+        }
+        if (n > x)
+        {
+            x = n;
+            ch = s[i];
+        }
+        n = 0;
+    }
+    return ch;
+}
+
 //main
 int main()
 {
@@ -340,6 +362,16 @@ int main()
         scanf("%d", &lim);
         truncW(s, lim);
         printf("string truncada: %s\n", s);
+        break;
+    }
+    case 14:
+    {
+        char s[100], ch;
+        printf("string (espaços): ");
+        getchar();
+        fgets(s, 100, stdin);
+        ch = charMaisfreq(s);
+        printf("char mais frequente: %c\n", ch);
         break;
     }
     }
