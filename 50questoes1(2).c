@@ -5,7 +5,7 @@
 
 void menu()
 {
-    printf("01. maior numero\n02. media da sequencia\n03. segundo maior\n04. bits a um\n05. ultimos bits a 0\n06. digitos necesarios\n07. concatena 2 strings\n08. copia string\n09. string compare\n10. string contida noutra\n11. string invertida\n12. string sem vogais\n13. string truncada\n14. char mais frequente\n15. iguais consecutivos\n16. diferentes consecutivos\n17. maior prefixo\n18. maior sufixo\n19.sufixo prefixo\n20. conta palavras\n");
+    printf("01. maior numero\n02. media da sequencia\n03. segundo maior\n04. bits a um\n05. ultimos bits a 0\n06. digitos necesarios\n07. concatena 2 strings\n08. copia string\n09. string compare\n10. string contida noutra\n11. string invertida\n12. string sem vogais\n13. string truncada\n14. char mais frequente\n15. iguais consecutivos\n16. diferentes consecutivos\n17. maior prefixo\n18. maior sufixo\n19.sufixo prefixo\n20. conta palavras\n21. conta vogais\n22. s1 contida em s2\n23. palindroma(le se igual dos dois sentidos)\n24. remove repetidos seguidos\n25.limpa espaços a mais\n");
 }
 //1.
 int maior()
@@ -335,6 +335,66 @@ int contaPal(char s[])
     return n;
 }
 
+//21.
+int contaVogais(char s[])
+{
+    int i, n = 0;
+    for (i = 0; s[i]; i++)
+        if (isvowel(s[i]))
+            n++;
+    return n;
+}
+
+//22.
+int contida(char a[], char b[])
+{
+    int i, j, x = 1;
+    for (i = 0; a[i] && x; i++)
+    {
+        x = 0;
+        for (j = 0; b[j] && !x; j++)
+            if (a[i] == b[j])
+                x = 1;
+    }
+    return x;
+}
+
+//23.
+int palindroma(char s[])
+{
+    int i, j, x = 1;
+    for (j = 0; s[j]; j++)
+        ;
+    for (i = 0, j--; i < j && x; i++, j--)
+        if (s[i] != s[j])
+            x = 0;
+    return x;
+}
+
+//24.
+int remRep(char x[])
+{
+    int i, j;
+    for (i = 0, j = 0; x[i]; i++)
+        if (x[i] != x[i + 1])
+            x[j++] = x[i];
+    x[j] = '\0';
+    return j;
+}
+
+//25.
+int limpaEspacos(char t[])
+{
+    int i, j;
+    for (i = 0, j = 0; t[i]; i++)
+    {
+        if (t[i] != ' ' || t[i - 1] != ' ')
+            t[j++] = t[i];
+    }
+    t[j] = '\0';
+    return j;
+}
+
 //main
 int main()
 {
@@ -543,6 +603,62 @@ int main()
         fgets(s, 100, stdin);
         n = contaPal(s);
         printf("tem %d palavras\n", n);
+        break;
+    }
+    case 21:
+    {
+        int n;
+        char s[100];
+        printf("string (espaços): ");
+        getchar();
+        fgets(s, 100, stdin);
+        n = contaVogais(s);
+        printf("tem %d vogais\n", n);
+        break;
+    }
+    case 22:
+    {
+        int n;
+        char s1[30], s2[100];
+        printf("string1: ");
+        scanf("%s", s1);
+        printf("string2 (espaços): ");
+        getchar();
+        fgets(s2, 100, stdin);
+        n = contida(s1, s2);
+        printf("s1 esta contida em s2? %s\n", n ? "True" : "False");
+        break;
+    }
+    case 23:
+    {
+        int n;
+        char s1[30];
+        printf("string: ");
+        scanf("%s", s1);
+        n = palindroma(s1);
+        printf("s1 e palindroma(le-se igual nos dois sentidos)? %s\n", n ? "True" : "False");
+        break;
+    }
+    case 24:
+    {
+        int n;
+        char s1[100];
+        printf("string (espaços): ");
+        getchar();
+        fgets(s1, 100, stdin);
+        n = remRep(s1);
+        printf("%s tem %d de comprimento\n", s1, n);
+        break;
+    }
+    case 25:
+    {
+        int n;
+        char s1[100];
+        printf("string (espaços): ");
+        getchar();
+        fgets(s1, 100, stdin);
+        n = limpaEspacos(s1);
+        printf("espaços removidos: %stem %d de comprimento\n", s1, n);
         break;
     }
     }
