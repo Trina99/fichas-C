@@ -5,7 +5,7 @@
 
 void menu()
 {
-    printf("1. maior numero\n2.media da sequencia\n3.segundo maior\n4.bits a um\n5.ultimos bits a 0\n6.digitos necesarios\n7.concatena 2 strings\n8.copia string\n9.string compare\n10.string contida noutra\n11.string invertida\n12.string sem vogais\n13.string truncada\n14.char mais frequente");
+    printf("01. maior numero\n02. media da sequencia\n03. segundo maior\n04. bits a um\n05. ultimos bits a 0\n06. digitos necesarios\n07. concatena 2 strings\n08. copia string\n09. string compare\n10. string contida noutra\n11. string invertida\n12. string sem vogais\n13. string truncada\n14. char mais frequente\n15. iguais consecutivos\n16. diferentes consecutivos\n17. maior prefixo\n18. maior sufixo\n19.sufixo prefixo\n20. conta palavras\n");
 }
 //1.
 int maior()
@@ -233,6 +233,108 @@ char charMaisfreq(char s[])
     return ch;
 }
 
+//15.
+int iguaisConsecutivos(char s[])
+{
+    int i, num = 1, max = 0;
+    for (i = 0; s[i]; i++)
+    {
+        if (s[i] == s[i + 1])
+            num++;
+        else
+        {
+            if (num > max)
+                max = num;
+            num = 1;
+        }
+    }
+    return max;
+}
+
+//16.
+int difConsecutivos(char s[])
+{
+    int i, j, x, sum, sumA, sumB, ctr;
+    sum = 0;
+    for (x = 0; s[x]; x++)
+    {
+        ctr = 1;
+        sumA = 0;
+        for (i = x; s[i] && ctr; i++)
+        {
+            sumB = 1;
+            for (j = x; j < i && ctr; j++)
+            {
+                if (s[j] == s[i])
+                    ctr = 0;
+                else
+                    sumB++;
+            }
+            if (sumB > sumA)
+                sumA = sumB;
+        }
+        if (sumA > sum)
+            sum = sumA;
+    }
+    return sum;
+}
+
+//17.
+int maiorPrefixo(char s1[], char s2[])
+{
+    int i;
+    for (i = 0; s1[i] && s1[i] == s2[i]; i++)
+        ;
+    return i;
+}
+
+//18.
+int maiorSufixo(char s1[], char s2[])
+{
+    int i, j, r;
+    for (i = 0; s1[i]; i++)
+        ;
+    for (j = 0; s2[j]; j++)
+        ;
+    for (r = -1; s1[i] == s2[j]; i--, j--)
+        r++;
+    return r;
+}
+
+//19.
+int sufPref(char s1[], char s2[])
+{
+    int i, j = 0, s = 0;
+    for (i = 0; s1[i]; i++)
+    {
+        if (s1[i] == s2[j++])
+            s++;
+        else
+            s = j = 0;
+    }
+    return s;
+}
+
+//20.
+int contaPal(char s[])
+{
+    int i, pal = 0, n = 0;
+    for (i = 0; s[i]; i++)
+    {
+        if (s[i] == ' ' || s[i] == '\n')
+            pal = 0;
+        else
+        {
+            if (pal == 0)
+            {
+                n++;
+                pal = 1;
+            }
+        }
+    }
+    return n;
+}
+
 //main
 int main()
 {
@@ -325,7 +427,7 @@ int main()
         char s1[30], s2[30], s3[30];
         printf("string1: ");
         scanf("%s", s1);
-        printf("strings2: ");
+        printf("string2: ");
         scanf("%s", s2);
         *s3 = *mystrstr(s1, s2);
         printf("%s ocorre em %s: %s\n", s2, s1, s3);
@@ -372,6 +474,75 @@ int main()
         fgets(s, 100, stdin);
         ch = charMaisfreq(s);
         printf("char mais frequente: %c\n", ch);
+        break;
+    }
+    case 15:
+    {
+        int ig;
+        char s[100];
+        printf("string (espaços): ");
+        getchar();
+        fgets(s, 100, stdin);
+        ig = iguaisConsecutivos(s);
+        printf("ha %d iguais consecutivos\n", ig);
+        break;
+    }
+    case 16:
+    {
+        int dif;
+        char s[100];
+        printf("string (espaços): ");
+        getchar();
+        fgets(s, 100, stdin);
+        dif = difConsecutivos(s);
+        printf("ha %d diferentes consecutivos\n", dif);
+        break;
+    }
+    case 17:
+    {
+        int m;
+        char s1[30], s2[30];
+        printf("string1: ");
+        scanf("%s", s1);
+        printf("string2: ");
+        scanf("%s", s2);
+        m = maiorPrefixo(s1, s2);
+        printf("maior prefixo: %d\n", m);
+        break;
+    }
+    case 18:
+    {
+        int m;
+        char s1[30], s2[30];
+        printf("string1: ");
+        scanf("%s", s1);
+        printf("string2: ");
+        scanf("%s", s2);
+        m = maiorSufixo(s1, s2);
+        printf("maior sufixo: %d\n", m);
+        break;
+    }
+    case 19:
+    {
+        int m;
+        char s1[30], s2[30];
+        printf("string1: ");
+        scanf("%s", s1);
+        printf("string2: ");
+        scanf("%s", s2);
+        m = sufPref(s1, s2);
+        printf("sufixo do primeiro, prefixo do segundo: %d\n", m);
+        break;
+    }
+    case 20:
+    {
+        int n;
+        char s[100];
+        printf("string (espaços): ");
+        getchar();
+        fgets(s, 100, stdin);
+        n = contaPal(s);
+        printf("tem %d palavras\n", n);
         break;
     }
     }
